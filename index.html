@@ -24,7 +24,7 @@
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <div>
-                    <h1 class="text-lg font-bold tracking-tight text-zinc-100 leading-tight">Around Taipe by アイスさん</h1>
+                    <h1 class="text-lg font-bold tracking-tight text-zinc-100 leading-tight">Around Taipei by アイスさん</h1>
                 </div>
             </div>
         </div>
@@ -37,6 +37,15 @@
             <!-- Dynamic content populated via script -->
         </div>
     </main>
+
+    <!-- Toast Notification for Copy -->
+    <div id="toast"
+        class="fixed bottom-6 right-6 z-50 bg-zinc-800 text-zinc-100 px-4 py-2.5 rounded-xl border border-zinc-700 shadow-2xl text-xs font-semibold opacity-0 translate-y-2 pointer-events-none transition-all duration-300 flex items-center gap-2">
+        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        <span id="toast-msg">Copied to clipboard!</span>
+    </div>
 
     <!-- Footer -->
     <footer class="w-full border-t border-zinc-800 bg-black py-6 text-center text-xs text-zinc-500">
@@ -72,27 +81,143 @@
         </div>
     </div>
 
+    <!-- Image Expansion Modal Viewer -->
+    <div id="image-modal"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md hidden opacity-0 transition-all duration-300">
+        <div class="relative max-w-4xl max-h-[90vh] mx-4 flex flex-col items-center">
+            <button id="close-image-modal-btn"
+                class="absolute -top-12 right-0 text-zinc-400 hover:text-white bg-zinc-800/80 hover:bg-zinc-700 p-2 rounded-full transition-colors shadow-lg">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                </svg>
+            </button>
+            <img id="expanded-image" src="" alt="Expanded view"
+                class="max-w-full max-h-[80vh] object-contain rounded-xl shadow-2xl border border-zinc-800">
+            <p id="image-caption" class="mt-4 text-zinc-300 text-sm font-medium text-center"></p>
+        </div>
+    </div>
+
     <!-- JavaScript Logic & Inline Data -->
     <script>
         // Data migrated directly from places.json
         const places = [
+
             {
+                "groupId":0,
+                "title": "Treasure Hill Artist Village",
+                "chineseTitle": "寶藏巖國際藝術村",
+                "travelTimeFromZhongliStation": "From Zhongli Station 1hr 28m (on the way to jiufen Old Street)",
+                "images": ["imgs/1113063833.png",
+                    "imgs/images.jpg",
+                    "imgs/images (1).jpg"
+                ],
+                "description": "Treasure Hill Artist Village is an experimental residential and creative community clinging to a hillside along the Xindian River",
+                "map_embed_url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1460.829527890185!2d121.53096183537716!3d25.010448674458665!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a9f488288573%3A0x212d81b73924c06d!2z6Ie65YyX5biC5b2x6KaW6Z-z5a-m6amX5pWZ6IKy5qmf5qeL!5e1!3m2!1sen!2sth!4v1794387651788!5m2!1sen!2sth"
+            },
+            {
+                "groupId":0,
+                "title": "Bopiliao Historical Block",
+                "chineseTitle": "剝皮寮歷史街區",
+                "travelTimeFromZhongliStation": "From Zhongli station ~ 53m",
+                "images": ["imgs/images (2).jpg", "imgs/ef0cac12-ff84-42cd-ad18-1efc7828d33c.webp"],
+                "description": "Centuries-old brick archways, traditional shophouses, and weathered facades that feel like stepping straight onto a movie set.",
+                "map_embed_url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d48638.522002526974!2d121.48507906933673!3d25.03136658036215!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a9a8d017b6dd%3A0xff3361bbadd40fe9!2sBopiliao%20Historical%20Block!5e0!3m2!1sen!2sth!4v1794388344259!5m2!1sen!2sth"
+            },
+            {
+                "groupId":0,
+                "title": "Huashan 1914 Creative Park",
+                "chineseTitle": "華山1914文化創意產業園區",
+                "travelTimeFromZhongliStation": "From Zhongli Station 1hr 19m",
+                "images": ["imgs/1mi55224x996efi1c9FCB_W_640_0_R5_Q80.jpg","imgs/74335ddeab16f63dd2ebccbdd5bbab57.jpg","imgs/IMG_3940.jpg","imgs/AFCB4A25-68C8-4796-BA7D-2187CAA66246_d.jpg"],
+                "description": "Chic, Art, Village? like the name (it's big)",
+                "map_embed_url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d222360.7116248249!2d121.20662613187473!3d25.012980044041342!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a96523e0246d%3A0xf1c9276707165c71!2sHuashan%201914%20Creative%20Park!5e1!3m2!1sen!2sth!4v1794388603297!5m2!1sen!2sth"
+            },
+
+            {
+                "groupId":1,
+                "title": "jiufen Old Street",
+                "chineseTitle": "九份老街",
+                "travelTimeFromZhongliStation": "From Zhongli station ~ 1hr 53m",
+                "images": [
+                    "imgs/jiufen-taiwan-teahouse.jpg"
+                ],
+                "description": "Chibli",
+                "map_embed_url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3471.6416257707897!2d121.84522299999999!3d25.109806!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x345d4517fafb9471%3A0x5f15825aa6a4a7d2!2sJiufen%20Old%20Street!5e1!3m2!1sen!2sth!4v1794379827987!5m2!1sen!2sth"
+            },
+            {
+                "groupId":1,
                 "title": "Houtong Cat Village",
+                "chineseTitle": "猴硐貓村",
+                "travelTimeFromZhongliStation": "next to jiufen Old Street",
                 "images": [
                     "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9RCwnf-eqAP9SOMGViOjvHPUrvs3eP3bAKPS23NzdFtsjYd_Xd5NoM5QNZlLHbBtzXPGnAqQN8T2FtWaqTBrbDLFqrJBSwAbCli4CuAcO_gIDCy55zhl3ga2I1_WwrCwnVNMkXX=s1360-w1360-h1020-rw",
                     "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9QjmASWh-Ovz-HbRvOSPc5wc2eQJe4efZ6TsIg_fD7VINTtVwFHB3AZ_n_m_fz5WRCiEXT5829Bt7_XeJfIQ9pZQJB8l0w7s4EQ7U3Z0sfkBvzAkeUt0YakDIsIqj-Wxgp20eKa=s1360-w1360-h1020-rw"
                 ],
-                "description": "blablabla",
+                "description": "Cat cat cat",
                 "map_embed_url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13888.96445647769!2d121.81883684306936!3d25.088682243009334!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x345d5ab379f5d523%3A0xde33885081c1e04a!2sHoutong%20Cat%20Village%2C%20Guangfu%20Village%2C%20Ruifang%20District%2C%20New%20Taipei%20City%2C%20Taiwan%20224!5e1!3m2!1sen!2sth!4v1794379799098!5m2!1sen!2sth"
             },
             {
-                "title": "jiufen Old Street",
-                "images": [
-                    "imgs/jiufen-taiwan-teahouse.jpg"
+                "groupId":2,
+                "title": "Zhongli Forest Story House",
+                "chineseTitle": "壢小故事森林",
+                "travelTimeFromZhongliStation": "Right next to Zhongli Station",
+                "images": ["imgs/20191030095439_1.jpg",
+                    "imgs/1757666180-1730376584-g.jpg"
                 ],
-                "description": "blablabla",
-                "map_embed_url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3471.6416257707897!2d121.84522299999999!3d25.109806!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x345d4517fafb9471%3A0x5f15825aa6a4a7d2!2sJiufen%20Old%20Street!5e1!3m2!1sen!2sth!4v1794379827987!5m2!1sen!2sth"
-            }
+                "description": "cute small but very easy to visit",
+                "map_embed_url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3476.057927086026!2d121.21784121075898!3d24.953826277776262!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34682393067d753f%3A0xa7e78e54e306d4fa!2sZhongli%20Forest%20Story%20House!5e1!3m2!1sen!2sth!4v1794387698601!5m2!1sen!2sth"
+            },
+            {
+                "groupId":3,
+                "title": "Daxi Old Street",
+                "chineseTitle": "大溪老街",
+                "travelTimeFromZhongliStation": "from AirBnb 1hr 4m",
+                "images": ["imgs/桃園一日遊｜大溪老街｜桃園景點1.jpg",
+                    "imgs/pic_2488_24.jpg"
+                ],
+                "description": "Daxi Old Street in Taoyuan, Taiwan, is a historic river port town famous for its Japanese-era Baroque store facades, traditional woodcraft, and signature dried tofu.",
+                "map_embed_url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3477.993126693636!2d121.28493101075664!3d24.885188577820788!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3468182238ecc34d%3A0x9eb6fcc6b7650372!2sDaxi%20Old%20Street!5e1!3m2!1sen!2sth!4v1794387740122!5m2!1sen!2sth"
+            },
+            {
+                "groupId":3,
+                "title": "Daxi Bridge",
+                "chineseTitle": "大溪橋",
+                "travelTimeFromZhongliStation": "next to Daxi Old Street",
+                "images": ["imgs/pic_A12-00244_3.jpg",
+                    "imgs/1024x768_attractions-image-gc9_tioj9ui1w9u-yyonoa.jpg"
+                ],
+                "description": "suspension bridge featuring Baroque-style arches that connects Daxi Old Street to the riverside park.",
+                "map_embed_url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3478.0029932126786!2d121.28087591075678!3d24.884838177821095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3468181f32a10bed%3A0x2906822e969d880b!2sDaxi%20Bridge!5e1!3m2!1sen!2sth!4v1794387761905!5m2!1sen!2sth"
+            },
+
+            // {
+            //     "title": "",
+            //     "chineseTitle": "",
+            //     "travelTimeFromZhongliStation": "",
+            //     "images": [],
+            //     "description": "",
+            //     "map_embed_url": ""
+            // },
+            // {
+            //     "title": "Shiding Old Street",
+            //     "chineseTitle": "石碇老街",
+            //     "travelTimeFromZhongliStation": "~ 1hr 57m",
+            //     "images": [
+            //         "https://lh3.googleusercontent.com/gps-cs-s/ANWiy9QzmpFk8QJ1sKhemdHZM2RuEmnnDykqdaBAfKBPc1ZeMbig_lNOu9ZbIa9hEl93G44bFjS1QXdHwScMnVFG4AxbB6xIb8IBpKzhqxt-31sWENUGp8ogUnx26i4RKK5S9wqhuQbrp1z5w1E=s1360-w1360-h1020-rw",
+            //         "imgs/shiding-old-street.jpg"
+            //     ],
+            //     "description": "Too far, last option",
+            //     "map_embed_url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3475.0155110908386!2d121.65822771076044!3d24.990725577752073!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x345d551037d795db%3A0xd84df8b00775cc1!2sShiding%20Old%20Street!5e1!3m2!1sen!2sth!4v1794387796448!5m2!1sen!2sth"
+            // },
+            // {
+            //     "title": "Jinguashih",
+            //     "chineseTitle": "金瓜石",
+            //     "travelTimeFromZhongliStation": "~ 2hr 12m",
+            //     "images": [],
+            //     "description": "Hiking, ruins, next to jiufen Old Street",
+            //     "map_embed_url": ""
+            // }
         ];
 
         function isLikelyDirectImage(url) {
@@ -101,6 +226,44 @@
             const hasImageExtension = lower.endsWith('.jpg') || lower.endsWith('.jpeg') || lower.endsWith('.png') || lower.endsWith('.webp') || lower.endsWith('.gif') || lower.includes('googleusercontent.com');
             const isBlogLink = lower.includes('blog') || lower.includes('article') || lower.includes('girleatworld.net');
             return hasImageExtension && !isBlogLink;
+        }
+
+        function showToast(text) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-msg');
+            toastMsg.textContent = `Copied "${text}"`;
+            toast.classList.remove('opacity-0', 'translate-y-2', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2', 'pointer-events-none');
+            }, 2000);
+        }
+
+        function copyToClipboard(text) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast(text);
+                }).catch(() => {
+                    fallbackCopy(text);
+                });
+            } else {
+                fallbackCopy(text);
+            }
+        }
+
+        function fallbackCopy(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";  // Avoid scrolling to bottom
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                showToast(text);
+            } catch (err) {
+                console.error('Fallback copy failed', err);
+            }
+            document.body.removeChild(textArea);
         }
 
         function renderPlaces() {
@@ -120,13 +283,37 @@
                 const card = document.createElement('div');
                 card.className = 'bg-zinc-900 rounded-2xl shadow-xs border border-zinc-800 overflow-hidden hover:shadow-xl hover:border-zinc-700 transition-all duration-300 flex flex-col justify-between group';
 
-                // Top content section (Title & Description with Open Map Button next to Title)
                 let contentDiv = document.createElement('div');
                 contentDiv.className = 'p-6 flex-grow';
 
+                // Constructing the new layout hierarchy inside the card header
                 contentDiv.innerHTML = `
-                    <div class="flex items-center justify-between gap-4 mb-3">
-                        <h2 class="text-xl font-bold text-zinc-100 group-hover:text-rose-500 transition-colors">${escapeHTML(place.title)}</h2>
+                    <div class="flex items-start justify-between gap-4 mb-3">
+                        <div class="space-y-1.5 flex-grow">
+                            <!-- Title Row with Copy Button -->
+                            <div class="flex items-center gap-2">
+                                <h2 class="text-xl font-bold text-zinc-100 group-hover:text-rose-500 transition-colors">${escapeHTML(place.title)}</h2>
+                                <button class="copy-title-btn p-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-zinc-100 rounded-lg transition-colors title="Copy Title" aria-label="Copy Title">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                                </button>
+                            </div>
+
+                            <!-- Chinese Title Row with Copy Button -->
+                            <div class="flex items-center gap-2">
+                                <span class="text-base font-medium text-zinc-300">${escapeHTML(place.chineseTitle)}</span>
+                                <button class="copy-chinese-btn p-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-zinc-100 rounded-lg transition-colors title="Copy Chinese Title" aria-label="Copy Chinese Title">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                                </button>
+                            </div>
+
+                            <!-- Travel Time from Zhongli Station -->
+                            <div class="flex items-center gap-1.5 text-xs font-semibold text-rose-400 pt-0.5">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <span> ${escapeHTML(place.travelTimeFromZhongliStation)}</span>
+                            </div>
+                        </div>
+
+                        <!-- Open Map Button -->
                         <button class="map-btn inline-flex items-center gap-1.5 px-3 py-1.5 bg-zinc-800 hover:bg-rose-600 text-zinc-200 hover:text-white text-xs font-semibold rounded-xl transition-all shadow-sm flex-shrink-0">
                             <svg class="w-3.5 h-3.5 text-rose-400 group-hover/btn:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
@@ -135,13 +322,22 @@
                             Open Map
                         </button>
                     </div>
-                    <p class="text-zinc-400 text-sm mb-4 leading-relaxed">${escapeHTML(place.description)}</p>
+                    <p class="text-zinc-400 text-sm mb-4 leading-relaxed mt-3">${escapeHTML(place.description)}</p>
                 `;
 
-                // Attach button event listener
-                const btn = contentDiv.querySelector('.map-btn');
-                btn.addEventListener('click', () => {
+                // Attach event listeners
+                contentDiv.querySelector('.map-btn').addEventListener('click', () => {
                     openMapModal(place.title, place.map_embed_url);
+                });
+
+                contentDiv.querySelector('.copy-title-btn').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    copyToClipboard(place.title);
+                });
+
+                contentDiv.querySelector('.copy-chinese-btn').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    copyToClipboard(place.chineseTitle);
                 });
 
                 // Build Image Gallery Grid dynamically
@@ -159,15 +355,13 @@
                             <img src="${displaySrc}" alt="${escapeHTML(place.title)} photo ${imgIndex + 1}" class="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400/27272a/a1a1aa?text=Taipei+View'">
                             <div class="absolute inset-0 bg-black/0 group-hover/img:bg-black/40 transition-colors flex items-center justify-center">
                                 <span class="opacity-0 group-hover/img:opacity-100 transition-opacity bg-zinc-900/95 text-zinc-100 text-[11px] font-semibold px-2.5 py-1 rounded-full shadow-md backdrop-blur-xs flex items-center gap-1 border border-zinc-700">
-                                    <svg class="w-3 h-3 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path></svg>
-                                    View Map
+                                    <svg class="w-3 h-3 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path></svg>
                                 </span>
                             </div>
                         `;
 
-                        // Clicking image opens the map iframe modal
                         imgCard.addEventListener('click', () => {
-                            openMapModal(place.title, place.map_embed_url);
+                            openImageModal(displaySrc, `${place.title} - Photo ${imgIndex + 1}`);
                         });
 
                         imagesWrapper.appendChild(imgCard);
@@ -187,7 +381,7 @@
             );
         }
 
-        // Modal Controls
+        // Map Modal Controls
         function openMapModal(title, embedUrl) {
             const modal = document.getElementById('map-modal');
             const modalContent = document.getElementById('modal-content');
@@ -220,11 +414,43 @@
             }, 300);
         }
 
-        // Event Listeners for Modal Closing
+        // Image Expansion Modal Controls
+        function openImageModal(imgSrc, captionText) {
+            const modal = document.getElementById('image-modal');
+            const expandedImg = document.getElementById('expanded-image');
+            const imgCaption = document.getElementById('image-caption');
+
+            expandedImg.src = imgSrc;
+            imgCaption.textContent = captionText;
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+            }, 10);
+        }
+
+        function closeImageModal() {
+            const modal = document.getElementById('image-modal');
+
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.getElementById('expanded-image').src = '';
+            }, 300);
+        }
+
+        // Event Listeners for Modals Closing
         document.getElementById('close-modal-btn').addEventListener('click', closeMapModal);
         document.getElementById('map-modal').addEventListener('click', function (e) {
             if (e.target === this) {
                 closeMapModal();
+            }
+        });
+
+        document.getElementById('close-image-modal-btn').addEventListener('click', closeImageModal);
+        document.getElementById('image-modal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeImageModal();
             }
         });
 
